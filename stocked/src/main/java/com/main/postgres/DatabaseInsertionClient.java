@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 import static com.main.api.StockRetriever.getAlphaVantageData;
 import static com.main.api.TimeSeriesIntervals.*;
 import static com.main.postgres.ConnectionClient.createConnection;
-import static java.lang.Thread.sleep;
 import com.main.io.*;
 
 public class DatabaseInsertionClient {

@@ -1,5 +1,6 @@
 package com.main.postgres;
 
+import java.io.File;
 import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,8 +11,6 @@ public abstract class ConnectionClient {
 
     Properties dbProperties = new Properties();
 
-    private static final String url = "jdbc:postgresql://localhost/postgres";
-
     public static Connection createConnection() {
 
         Connection dbConn = null;
@@ -19,25 +18,21 @@ public abstract class ConnectionClient {
             // Create Properties object.
             Properties props = new Properties();
 
-            String dbSettingsPropertyFile = "./database.properties";
+            File dbSettingsPropertyFile = new File("./stocked/src/main/java/com/main/postgres/database.properties");
+
             // Properties will use a FileReader object as input.
             FileReader fReader = new FileReader(dbSettingsPropertyFile);
-
             // Load jdbc related properties in above file.
             props.load(fReader);
 
             // Get each property value.
-            String dbDriverClass = props.getProperty("db.driver.class");
+            String dbDriverClass = props.getProperty("db.datasource.driver.class");
 
-            String dbConnUrl = props.getProperty("db.conn.url");
-
-            String dbUserName = props.getProperty("db.user");
-
-            String dbPassword = props.getProperty("db.password");
-
+            props.setProperty("user", props.getProperty("db.datasource.user"));
+            props.setProperty("password", props.getProperty("db.datasource.password"));
             Class.forName(dbDriverClass);
-
-            dbConn = DriverManager.getConnection(dbConnUrl, dbUserName, dbPassword);
+            String url = props.getProperty("db.datasource.url");
+            dbConn = DriverManager.getConnection(url ,props);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
