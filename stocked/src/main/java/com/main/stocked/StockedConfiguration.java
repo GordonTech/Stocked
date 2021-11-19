@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
-public class AppConfiguration implements WebMvcConfigurer {
+public class StockedConfiguration implements WebMvcConfigurer {
 
     @Bean
     public ViewResolver jspViewResolver() {
